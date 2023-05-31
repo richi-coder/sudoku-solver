@@ -7,8 +7,8 @@ function Dashboard() {
     const userSudoku = (position: any, cell: string):void => {
         const { i, j} = position;
         const copy = dashboard.slice(0);
-        const iLine = copy[i - 1].map((square: string, index: number) => index === j - 1 ? cell : square)
-        copy[i - 1] = iLine;
+        const iLine = copy[i].map((square: string, index: number) => index === j ? cell : square)
+        copy[i] = iLine;
         const updatedDashboard = [...copy]
         console.log(updatedDashboard, 'updated');
         setDashboard(updatedDashboard)
@@ -19,7 +19,7 @@ function Dashboard() {
         {
             dashboard.map((line, i: number) => 
                 line.map((cell: string, j: number) => 
-                        <Cell key={String(i) + String(j)} position={{i: i+1, j: j+1}} cell={cell} sudokuPuzzle={userSudoku} />
+                        <Cell key={String(i) + String(j)} position={{i, j}} cell={cell} sudokuPuzzle={userSudoku} />
             ))
         }
     </div>

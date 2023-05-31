@@ -16,7 +16,9 @@ function Cell({ cell, position, sudokuPuzzle }: { cell: string, position: Positi
         onChange={cellChange}
         type="text"
         value={cell}
-        className='bg-black border-pink-500 border w-20 h-20 text-white text-5xl text-center' />
+        className={`bg-black border-orange-400 border w-20 h-20 text-white text-5xl text-center
+        ${position.j == 2 || position.j == 5 ? 'border-r-8' : ''}
+        ${position.i == 2 || position.i == 5 ? 'border-b-8' : ''}`}  />
   )
 }
 
