@@ -3,13 +3,15 @@ import Cell from "./Cell"
 import { solveSudoku } from "./scripts/solver";
 import { LineNumber } from "./types/GeneralTypes";
 
+const initSudoku = new Array(9).fill(new Array(9).fill(0))
+
 function Dashboard() {
     const [dashboard, setDashboard] = useState(() => {
       try {
         const initDashboard = window.localStorage.getItem('dashboard');
-        return initDashboard ? JSON.parse(initDashboard) : new Array(9).fill(new Array(9).fill(0))
+        return initDashboard ? JSON.parse(initDashboard) : initSudoku
       } catch (error) {
-        return new Array(9).fill(new Array(9).fill(0));
+        return initSudoku
       }
     })
 
@@ -32,6 +34,11 @@ function Dashboard() {
       console.log(count, 'Lacking squares!');
       setDashboard(solveSudoku(dashboard))
     }
+    
+    const cleanDashboard = () => {
+        window.localStorage.setItem('dashboard', JSON.stringify(initSudoku))
+        setDashboard(initSudoku)
+    }
 
   return (
     <div className='flex flex-row'>
@@ -47,7 +54,12 @@ function Dashboard() {
       <button
           onClick={startSudokuSolver}
           className='bg-blue-700 text-white'>
-            solve
+          solve
+      </button>
+      <button
+          onClick={cleanDashboard}
+          className='bg-orange-700 text-white'>
+          clean
       </button>
     </div>
   )
