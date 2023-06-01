@@ -1,12 +1,13 @@
 import { useState } from "react"
 import Cell from "./Cell"
 import { solveSudoku } from "./scripts/solver";
-import { LineNumber } from "./types/GeneralTypes";
+import { LineNumber, SquareDashboard } from "./types/GeneralTypes";
+import { TypeDashboard } from "./types/GeneralTypes";
 
 const initSudoku = new Array(9).fill(new Array(9).fill(0))
 
 function Dashboard() {
-    const [dashboard, setDashboard] = useState(() => {
+    const [dashboard, setDashboard] = useState<TypeDashboard>(() => {
       try {
         const initDashboard = window.localStorage.getItem('dashboard');
         return initDashboard ? JSON.parse(initDashboard) : initSudoku
@@ -18,7 +19,7 @@ function Dashboard() {
     const userSudoku = (position: any, cell: number):void => {
         const { i, j} = position;
         const copy = dashboard.slice(0);
-        const iLine = copy[i].map((square: number, index: number) => index === j ? cell : square)
+        const iLine = copy[i].map((square: SquareDashboard, index: number) => index === j ? cell : square)
         copy[i] = iLine;
         const updatedDashboard = [...copy]
         window.localStorage.setItem('dashboard', JSON.stringify(updatedDashboard))        
@@ -26,9 +27,9 @@ function Dashboard() {
     }
 
     const startSudokuSolver = () => {
-      const countingLackingSquares = dashboard.map((line: [])  => line.filter((square: string) => square == '0'));
+      const countingLackingSquares = dashboard.map((line: LineNumber)  => line.filter((square: SquareDashboard) => square == 0));
       let count = 0;
-      countingLackingSquares.forEach((zeroLine: LineNumber) => zeroLine.forEach((zeroSquare: number) => {
+      countingLackingSquares.forEach((zeroLine: LineNumber) => zeroLine.forEach((zeroSquare: SquareDashboard) => {
         count++;
       }))
       console.log(count, 'Lacking squares!');
@@ -44,8 +45,8 @@ function Dashboard() {
     <div className='flex flex-row'>
       <div className='grid grid-cols-9'>
           {
-              dashboard.map((line: [], i: number) => 
-                  line.map((cell: string, j: number) => 
+              dashboard.map((line: LineNumber, i: number) => 
+                  line.map((cell: SquareDashboard, j: number) => 
                           <Cell key={String(i) + String(j)} position={{i, j}} cell={cell} sudokuPuzzle={userSudoku} />
               ))
           }
