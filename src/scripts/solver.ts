@@ -1,7 +1,6 @@
 import { TypeDashboard } from "../types/GeneralTypes";
+import { blockSolver } from "./blockSolver";
 import { linearSolver } from "./linearSolver";
-
-
 
 export const solveSudoku = (dashboard: TypeDashboard) => {
     const initialTime = Date.now()
@@ -10,12 +9,13 @@ export const solveSudoku = (dashboard: TypeDashboard) => {
     const dashboardNumber: TypeDashboard = converToNumber(dashboard);
 
     // 1.5 Iterations
-    let iteration = dashboardNumber;
+    let iteration: TypeDashboard = dashboardNumber;
 
-    for (let k = 0; k < 500; k++) {
+    for (let k = 0; k < 3; k++) {
 
         // first solver: LINEAR SOLVER
         iteration = linearSolver(iteration, k)
+        iteration = blockSolver(iteration, k)
 
     }
     

@@ -2,15 +2,366 @@ import { LineNumber, TypeDashboard } from "../types/GeneralTypes";
 
 const baseLine: number[] = [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 
+const helperBlock = [
+    [
+        {
+            i: 0,
+            j: 0
+        },
+        {
+            i: 0,
+            j: 1
+        },
+        {
+            i: 0,
+            j: 2
+        },
+        {
+            i: 1,
+            j: 0
+        },
+        {
+            i: 1,
+            j: 1
+        },
+        {
+            i: 1,
+            j: 2
+        },
+        {
+            i: 2,
+            j: 0
+        },
+        {
+            i: 2,
+            j: 1
+        },
+        {
+            i: 2,
+            j: 2
+        }
+    ],
+    [
+        {
+            i: 0,
+            j: 3
+        },
+        {
+            i: 0,
+            j: 4
+        },
+        {
+            i: 0,
+            j: 5
+        },
+        {
+            i: 1,
+            j: 3
+        },
+        {
+            i: 1,
+            j: 4
+        },
+        {
+            i: 1,
+            j: 5
+        },
+        {
+            i: 2,
+            j: 3
+        },
+        {
+            i: 2,
+            j: 4
+        },
+        {
+            i: 2,
+            j: 5
+        }
+    ],
+    [
+        {
+            i: 0,
+            j: 6
+        },
+        {
+            i: 0,
+            j: 7
+        },
+        {
+            i: 0,
+            j: 8
+        },
+        {
+            i: 1,
+            j: 6
+        },
+        {
+            i: 1,
+            j: 7
+        },
+        {
+            i: 1,
+            j: 8
+        },
+        {
+            i: 2,
+            j: 6
+        },
+        {
+            i: 2,
+            j: 7
+        },
+        {
+            i: 2,
+            j: 8
+        }
+    ],
+    [
+        {
+            i: 3,
+            j: 0
+        },
+        {
+            i: 3,
+            j: 1
+        },
+        {
+            i: 3,
+            j: 2
+        },
+        {
+            i: 4,
+            j: 0
+        },
+        {
+            i: 4,
+            j: 1
+        },
+        {
+            i: 4,
+            j: 2
+        },
+        {
+            i: 5,
+            j: 0
+        },
+        {
+            i: 5,
+            j: 1
+        },
+        {
+            i: 5,
+            j: 2
+        }
+    ],
+    [
+        {
+            i: 3,
+            j: 3
+        },
+        {
+            i: 3,
+            j: 4
+        },
+        {
+            i: 3,
+            j: 5
+        },
+        {
+            i: 4,
+            j: 3
+        },
+        {
+            i: 4,
+            j: 4
+        },
+        {
+            i: 4,
+            j: 5
+        },
+        {
+            i: 5,
+            j: 3
+        },
+        {
+            i: 5,
+            j: 4
+        },
+        {
+            i: 5,
+            j: 5
+        }
+    ],
+    [
+        {
+            i: 3,
+            j: 6
+        },
+        {
+            i: 3,
+            j: 7
+        },
+        {
+            i: 3,
+            j: 8
+        },
+        {
+            i: 4,
+            j: 6
+        },
+        {
+            i: 4,
+            j: 7
+        },
+        {
+            i: 4,
+            j: 8
+        },
+        {
+            i: 5,
+            j: 6
+        },
+        {
+            i: 5,
+            j: 7
+        },
+        {
+            i: 5,
+            j: 8
+        }
+    ],
+    [
+        {
+            i: 6,
+            j: 0
+        },
+        {
+            i: 6,
+            j: 1
+        },
+        {
+            i: 6,
+            j: 2
+        },
+        {
+            i: 7,
+            j: 0
+        },
+        {
+            i: 7,
+            j: 1
+        },
+        {
+            i: 7,
+            j: 2
+        },
+        {
+            i: 8,
+            j: 0
+        },
+        {
+            i: 8,
+            j: 1
+        },
+        {
+            i: 8,
+            j: 2
+        }
+    ],
+    [
+        {
+            i: 6,
+            j: 3
+        },
+        {
+            i: 6,
+            j: 4
+        },
+        {
+            i: 6,
+            j: 5
+        },
+        {
+            i: 7,
+            j: 3
+        },
+        {
+            i: 7,
+            j: 4
+        },
+        {
+            i: 7,
+            j: 5
+        },
+        {
+            i: 8,
+            j: 3
+        },
+        {
+            i: 8,
+            j: 4
+        },
+        {
+            i: 8,
+            j: 5
+        }
+    ],
+    [
+        {
+            i: 6,
+            j: 6
+        },
+        {
+            i: 6,
+            j: 7
+        },
+        {
+            i: 6,
+            j: 8
+        },
+        {
+            i: 7,
+            j: 6
+        },
+        {
+            i: 7,
+            j: 7
+        },
+        {
+            i: 7,
+            j: 8
+        },
+        {
+            i: 8,
+            j: 6
+        },
+        {
+            i: 8,
+            j: 7
+        },
+        {
+            i: 8,
+            j: 8
+        }
+    ]
+]
+
 export const linearSolver = (iteration: TypeDashboard, k: number) => {
 
-    // 2. Create to types of multidimensional arrays for easy checking
+            // 2. Create to types of multidimensional arrays for easy checking
                 // 2.1 dashboardHorizontal
                 const horizontalDashboard = [...iteration];
-                // console.log(horizontalDashboard, 'horizontal');
+                
                 // 2.2 dashboardVertical
                 const verticalDashboard = iteration[0].map((column, j) => iteration.map(line => line[j]))
-                // console.log(verticalDashboard, 'vertical');
+                // 2.3 dashboardBLocks
+                const preBlockDashboard = new Array(9).fill(new Array(9).fill(0));
+                const blockDashboard = preBlockDashboard.map((block, iBlock) => block.map((square, jBlock) => {
+                    const position = helperBlock[iBlock][jBlock];
+                    const { i, j } = position;
+                    return iteration[i][j]
+                }))
 
             // 3. Check lines
             const dashboardCheckLine = checkingArrays(horizontalDashboard)
@@ -23,8 +374,13 @@ export const linearSolver = (iteration: TypeDashboard, k: number) => {
             // 5. Convert vertical back to horizontal dashboard
             const dashboardCheckColumn = preDashboardCheckColumn[0].map((row, j) => preDashboardCheckColumn.map(line => line[j]))
             // console.log(dashboardCheckColumn, 'second horizontal');
+
+            // 6. Check blocks
+            const preDashboardCheckBLock = checkingArrays(blockDashboard)
+            console.log(preDashboardCheckBLock, 'BLOCK CHECKiiii');
             
-            // 6. Integrate into only one multidimensional array for an iteration
+            
+            // 7. Integrate into only one multidimensional array for an iteration
             iteration = integrateSquares(dashboardCheckLine, dashboardCheckColumn)
             console.log(iteration, `Iteration: ${k}`);
             return iteration;
@@ -39,6 +395,8 @@ const integrateSquares = (firstDashboard: any, secondDashboard: any) => {
         line.map((square, j) => {
             if (typeof square === 'string') {
                 const integrate = secondDashboard[i][j].split('').filter((element: string) => firstDashboard[i][j].indexOf(element) !== -1).join('')
+
+
                 return integrate.length == 1 ? Number(integrate) : 0;
             }
             return square
@@ -47,6 +405,12 @@ const integrateSquares = (firstDashboard: any, secondDashboard: any) => {
     return integratedSquares
 
 }
+
+// const checkingBlocks = (blockDashboard) => {
+//     const dashboardCheckBlock = blockDashboard.map((block: []) => {
+//         const result = block.map((square: number) => square != 0 ? square : square == 0 ? checkLine)
+//     })
+// }
 
 
 const checkingArrays = (dashboardNumber: TypeDashboard) => {
