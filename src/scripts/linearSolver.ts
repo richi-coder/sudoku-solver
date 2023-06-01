@@ -362,10 +362,11 @@ export const linearSolver = (iteration: TypeDashboard, k: number) => {
                     const { i, j } = position;
                     return iteration[i][j] 
                 }))
+                console.log(blockDashboard, 'blockdashboard');
 
             // 3. Check lines
             const dashboardCheckLine = checkingArrays(horizontalDashboard)
-            // console.log(dashboardCheckLine, 'first process');
+            console.log(dashboardCheckLine, 'first process');
 
             // 4. Check columns
             const preDashboardCheckColumn = checkingArrays(verticalDashboard)
