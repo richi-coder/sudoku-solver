@@ -11,7 +11,7 @@ export const solveSudoku = (dashboard: TypeDashboard) => {
     // 1.5 Iterations
     let iteration: TypeDashboard = dashboardNumber;
 
-    for (let k = 0; k < 3; k++) {
+    for (let k = 0; k < 5; k++) {
 
         // first solver: LINEAR SOLVER
         iteration = linearSolver(iteration, k)

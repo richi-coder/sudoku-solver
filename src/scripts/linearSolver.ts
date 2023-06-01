@@ -1,4 +1,4 @@
-import { LineNumber, TypeDashboard } from "../types/GeneralTypes";
+import { LineNumber, Position, TypeDashboard } from "../types/GeneralTypes";
 
 const baseLine: number[] = [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 
@@ -360,7 +360,7 @@ export const linearSolver = (iteration: TypeDashboard, k: number) => {
                 const blockDashboard = preBlockDashboard.map((block, iBlock) => block.map((square, jBlock) => {
                     const position = helperBlock[iBlock][jBlock];
                     const { i, j } = position;
-                    return iteration[i][j]
+                    return iteration[i][j] 
                 }))
 
             // 3. Check lines
@@ -378,10 +378,31 @@ export const linearSolver = (iteration: TypeDashboard, k: number) => {
             // 6. Check blocks
             const preDashboardCheckBLock = checkingArrays(blockDashboard)
             console.log(preDashboardCheckBLock, 'BLOCK CHECKiiii');
-            
+
+            let dashboardCheckBlock = new Array(9).fill(new Array(9).fill(null));
+            // console.log(dashboardCheckBlock, 'FIRST CHECK');
+
+            dashboardCheckBlock = dashboardCheckBlock.map((line, i) => line.map((square: number, j) => {
+                let position: Position = {
+                    'iBlock': null,
+                    'jBlock': null
+                };
+
+                helperBlock.forEach((block, iBlock) => {
+                        block.forEach((squareHelper, jBlock) => {
+                            if (squareHelper.i == i && squareHelper.j == j) {
+                                // position = { iBlock, jBlock}
+                                position.iBlock = iBlock,
+                                position.jBlock = jBlock
+                            }
+                        })
+                } )
+                return preDashboardCheckBLock[position.iBlock][position.jBlock]
+            }))
+            console.log(dashboardCheckBlock, 'CHECK HERE PLEASE!');
             
             // 7. Integrate into only one multidimensional array for an iteration
-            iteration = integrateSquares(dashboardCheckLine, dashboardCheckColumn)
+            iteration = integrateSquares(dashboardCheckLine, dashboardCheckColumn, dashboardCheckBlock)
             console.log(iteration, `Iteration: ${k}`);
             return iteration;
 
@@ -389,28 +410,32 @@ export const linearSolver = (iteration: TypeDashboard, k: number) => {
 
 
 
-const integrateSquares = (firstDashboard: any, secondDashboard: any) => {
+const integrateSquares = (firstDashboard: TypeDashboard, secondDashboard: TypeDashboard, thirdDashboard: TypeDashboard) => {
 
-    const integratedSquares = firstDashboard.map((line: LineNumber, i: number) => 
+    const firstIntegration = dashboardIntegrator(firstDashboard, secondDashboard);
+    console.log(firstIntegration, 'INTEGRATION 1');
+    const secondIntegration = dashboardIntegrator(firstIntegration, thirdDashboard)
+    console.log(firstIntegration, 'INTEGRATION 2');
+    return secondIntegration
+
+}
+
+const dashboardIntegrator = (dashboardA: TypeDashboard, dashboardB: TypeDashboard) => {
+
+    const result = dashboardA.map((line: LineNumber, i: number) => 
         line.map((square, j) => {
             if (typeof square === 'string') {
-                const integrate = secondDashboard[i][j].split('').filter((element: string) => firstDashboard[i][j].indexOf(element) !== -1).join('')
+                const integrate = dashboardB[i][j].split('').filter((element: string) => dashboardA[i][j].indexOf(element) !== -1).join('')
 
 
-                return integrate.length == 1 ? Number(integrate) : 0;
+                return integrate.length == 1 ? Number(integrate) : integrate;
             }
             return square
         })
         )
-    return integratedSquares
+    return result
 
 }
-
-// const checkingBlocks = (blockDashboard) => {
-//     const dashboardCheckBlock = blockDashboard.map((block: []) => {
-//         const result = block.map((square: number) => square != 0 ? square : square == 0 ? checkLine)
-//     })
-// }
 
 
 const checkingArrays = (dashboardNumber: TypeDashboard) => {
@@ -418,7 +443,6 @@ const checkingArrays = (dashboardNumber: TypeDashboard) => {
         const result = lineToTest.map((square: number) => square != 0 ? square : square == 0 ? checkLine(lineToTest) :  String(square) + checkLine(lineToTest))
         return result;
     })
-    // console.log(dashboardCheckLine, 'checklines');
     return dashboardCheckLine;
 }
 

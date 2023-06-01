@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Cell from "./Cell"
 import { solveSudoku } from "./scripts/solver";
+import { LineNumber } from "./types/GeneralTypes";
 
 function Dashboard() {
     const [dashboard, setDashboard] = useState(() => {
@@ -23,6 +24,12 @@ function Dashboard() {
     }
 
     const startSudokuSolver = () => {
+      const countingLackingSquares = dashboard.map((line: [])  => line.filter((square: string) => square == '0'));
+      let count = 0;
+      countingLackingSquares.forEach((zeroLine: LineNumber) => zeroLine.forEach((zeroSquare: number) => {
+        count++;
+      }))
+      console.log(count, 'Lacking squares!');
       setDashboard(solveSudoku(dashboard))
     }
 
